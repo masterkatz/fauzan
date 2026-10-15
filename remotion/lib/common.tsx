@@ -13,7 +13,7 @@ export const Sfx: React.FC<{f: string; at: number; v?: number}> = ({f, at, v = 0
 // Music latar: perlahan bawah suara, naik masa end card, fade out hujung.
 export const Music: React.FC<{f: string; v?: number; vEnd?: number}> = ({f, v = 0.16, vEnd = 0.38}) => (
   <Html5Audio
-    src={staticFile(`music/${f}.wav`)}
+    src={staticFile(`music/${f}.m4a`)}
     volume={(fr) => {
       const t = fr / 30;
       const base = interpolate(t, [0, 0.4, BEATS.end.t - 0.2, BEATS.end.t + 0.4], [0, v, v, vEnd], {

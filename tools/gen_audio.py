@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Synth SFX + music loop untuk demo template (placeholder sampai user upload pack sendiri).
-Output: public/sfx/*.wav, public/music/*.wav (48kHz stereo 16-bit)."""
+Output: public/sfx/*.wav, public/music/*.m4a."""
 import os, sys, wave
 import numpy as np
 
@@ -355,7 +355,8 @@ if __name__ == "__main__":
     save(f"{S}/paper.wav", paper(), 0.6)
     save(f"{S}/click.wav", click(), 0.6)
     save(f"{S}/swish3d.wav", swish3d())
-    save(f"{M}/pop.wav", music_pop(), 0.8)
-    save(f"{M}/ambient.wav", music_ambient(), 0.8)
-    save(f"{M}/dark.wav", music_dark(), 0.8)
-    save(f"{M}/playful.wav", music_playful(), 0.8)
+    for name, fn in (("pop", music_pop), ("ambient", music_ambient), ("dark", music_dark), ("playful", music_playful)):
+        wav = f"{M}/{name}.wav"
+        save(wav, fn(), 0.8)
+        # m4a: jimat saiz repo (wav 4.6MB -> ~0.5MB)
+        os.system(f'ffmpeg -v error -y -i "{wav}" -c:a aac -b:a 160k "{M}/{name}.m4a" && rm "{wav}"')
