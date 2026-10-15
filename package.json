@@ -18,12 +18,33 @@
   },
   "homepage": "https://github.com/masterkatz/fauzan#readme",
   "dependencies": {
+    "@fontsource/abril-fatface": "^5.3.0",
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/bebas-neue": "^5.3.0",
+    "@fontsource/caveat": "^5.3.0",
+    "@fontsource/cinzel": "^5.3.0",
+    "@fontsource/dm-serif-display": "^5.3.0",
+    "@fontsource/monoton": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/oswald": "^5.3.0",
+    "@fontsource/permanent-marker": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "@fontsource/space-mono": "^5.3.0",
     "@huggingface/transformers": "^4.3.1",
     "@remotion/cli": "^4.0.532",
+    "@remotion/fonts": "^4.0.532",
+    "@remotion/motion-blur": "^4.0.532",
+    "@remotion/noise": "^4.0.532",
     "hyperframes": "^0.8.119",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "remotion": "^4.0.532",
     "sts-whisper-small": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
   }
 }
