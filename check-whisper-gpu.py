@@ -2,6 +2,7 @@
 Cara guna:  py -3.12 check-whisper-gpu.py
 """
 import os, sys, glob, time, sysconfig
+os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
 # Windows: bagi ctranslate2 jumpa DLL CUDA dari pip (nvidia-cublas-cu12, nvidia-cudnn-cu12)
 site = sysconfig.get_paths()["purelib"]
@@ -35,5 +36,13 @@ for ct_try in (ct, "float32"):
         sys.exit(0)
     except Exception as e:
         print(f"compute_type={ct_try} gagal: {e}")
-print("GAGAL: GPU dikesan tapi model tak boleh jalan. Paste output ni kat Claude.")
+print("GAGAL: GPU dikesan tapi model tak boleh jalan (GPU mungkin terlalu lama untuk ctranslate2).")
+print("Test CPU pula...")
+try:
+    t = time.time()
+    model = WhisperModel("small", device="cpu", compute_type="int8")
+    list(model.transcribe(audio, language="ms")[0])
+    print(f"OK: faster-whisper jalan atas CPU (int8) dalam {time.time()-t:.1f}s")
+except Exception as e:
+    print(f"CPU pun gagal: {e}")
 sys.exit(1)
