@@ -7,11 +7,13 @@ param(
     [string]$ProjectRoot = ""
 )
 
-# Auto pilih folder projek: guna G:\ kalau ada (PC rumah), kalau takde guna C:\ (PC ofis)
-$FolderName = "Recorder Live Host Qherbs Marketing"
+# Auto pilih folder projek:
+#   PC rumah -> G:\Recorder Live Host Qherbs Marketing (kalau ada)
+#   PC ofis  -> Desktop\Editing Video Claude
 if (-not $ProjectRoot) {
-    if (Test-Path "G:\$FolderName") { $ProjectRoot = "G:\$FolderName" }
-    else { $ProjectRoot = "C:\$FolderName" }
+    $homeRoot = "G:\Recorder Live Host Qherbs Marketing"
+    if (Test-Path $homeRoot) { $ProjectRoot = $homeRoot }
+    else { $ProjectRoot = Join-Path ([Environment]::GetFolderPath("Desktop")) "Editing Video Claude" }
 }
 
 $ErrorActionPreference = "Continue"
