@@ -4,8 +4,15 @@
 # Selamat untuk run berulang kali - benda yang dah ada akan di-skip.
 
 param(
-    [string]$ProjectRoot = "G:\Recorder Live Host Qherbs Marketing"
+    [string]$ProjectRoot = ""
 )
+
+# Auto pilih folder projek: guna G:\ kalau ada (PC rumah), kalau takde guna C:\ (PC ofis)
+$FolderName = "Recorder Live Host Qherbs Marketing"
+if (-not $ProjectRoot) {
+    if (Test-Path "G:\$FolderName") { $ProjectRoot = "G:\$FolderName" }
+    else { $ProjectRoot = "C:\$FolderName" }
+}
 
 $ErrorActionPreference = "Continue"
 $log = Join-Path $env:TEMP "setup-pc-log.txt"
@@ -91,7 +98,16 @@ if (Get-Command npx -ErrorAction SilentlyContinue) {
 } else { Warn "npx takde - tutup & buka semula PowerShell, run script ni sekali lagi." }
 
 # ---------------------------------------------------------------- 6. shared assets
-Step "6/7 Fonts + GSAP ke $ProjectRoot\shared"
+Step "6/7 Folder projek + Fonts + GSAP di $ProjectRoot"
+# struktur folder ikut arahan.md
+foreach ($sub in "raw", "broll", "img", "sfx", "music", "shared\sfx", "shared\music", "Claude outputs") {
+    New-Item -ItemType Directory -Force -Path (Join-Path $ProjectRoot $sub) | Out-Null
+}
+Ok "Folder projek sedia: $ProjectRoot"
+$drive = (Get-Item $ProjectRoot).PSDrive
+$freeGB = [math]::Round($drive.Free / 1GB, 1)
+if ($freeGB -lt 50) { Warn "Disk $($drive.Name): tinggal $freeGB GB. Video live 3 jam + render perlu ~50GB+." }
+else { Ok "Disk $($drive.Name): $freeGB GB kosong" }
 if (Test-Path $ProjectRoot) {
     $fonts = Join-Path $ProjectRoot "shared\fonts"
     $js    = Join-Path $ProjectRoot "shared\js"
